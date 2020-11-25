@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Needs to be run as root
+if [[ $EUID -ne 0 ]]; then
+   printf "This script must be run as root\n" 1>&2
+   printf "Try re-running it as 'sudo $0' or 'sudo !!'\n" 1>&2
+   exit 1
+fi
+
+# Good for version 1.3.00.28778 of Teams.
+# From https://answers.microsoft.com/en-us/msteams/forum/all/microsoft-teams-mac-os-client-is-not-recognizing/d9e863be-d9a4-4d03-a4b8-1b5c7df58828?auth=1
+
+# Should check location and version of Teams
+v=$(defaults read "/Applications/Microsoft Teams.app/Contents/Info" CFBundleShortVersionString)
+
+# Note the mismatch betweeen the displayed version and that seen here
+if [ "$v" != "1.00.328778" ]; then
+	printf "Wrong Teams version: '$v'\n"
+	exit 1;
+fi
+
+codesign --remove-signature "/Applications/Microsoft Teams.app"
+codesign --remove-signature "/Applications/Microsoft Teams.app/Contents/Frameworks/Microsoft Teams Helper.app"
+codesign --remove-signature "/Applications/Microsoft Teams.app/Contents/Frameworks/Microsoft Teams Helper (GPU).app"
+codesign --remove-signature "/Applications/Microsoft Teams.app/Contents/Frameworks/Microsoft Teams Helper (Plugin).app"
+codesign --remove-signature "/Applications/Microsoft Teams.app/Contents/Frameworks/Microsoft Teams Helper (Renderer).app"
+
+printf "Teams should now be un-signed and ready to work with virtual cameras again\n"
+printf "- Keep an eye on updates, they may not work, and if they do then this may need re-running\n"
+printf "- YOu may need to stop Teams and re-enable permissions under Security/Permissions/Screen Recording\n"
+exit o;
