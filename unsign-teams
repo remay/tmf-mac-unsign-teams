@@ -27,5 +27,5 @@ codesign --remove-signature "/Applications/Microsoft Teams.app/Contents/Framewor
 
 printf "Teams should now be un-signed and ready to work with virtual cameras again\n"
 printf "- Keep an eye on updates, they may not work, and if they do then this may need re-running\n"
-printf "- YOu may need to stop Teams and re-enable permissions under Security/Permissions/Screen Recording\n"
-exit o;
+printf "- You may need to stop Teams and re-enable permissions under Security/Permissions/Screen Recording\n"
+exit 0;
