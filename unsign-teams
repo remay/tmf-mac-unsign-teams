@@ -14,7 +14,7 @@ fi
 v=$(defaults read "/Applications/Microsoft Teams.app/Contents/Info" CFBundleShortVersionString)
 
 # Note the mismatch betweeen the displayed version and that seen here
-if [ "$v" != "1.00.328778" ]; then
+if [ "$v" != "1.00.328778" ] && [ $v != "1.00.330874" ]; then
 	printf "Wrong Teams version: '$v'\n"
 	exit 1;
 fi
@@ -26,6 +26,6 @@ codesign --remove-signature "/Applications/Microsoft Teams.app/Contents/Framewor
 codesign --remove-signature "/Applications/Microsoft Teams.app/Contents/Frameworks/Microsoft Teams Helper (Renderer).app"
 
 printf "Teams should now be un-signed and ready to work with virtual cameras again\n"
-printf "- Keep an eye on updates, they may not work, and if they do then this may need re-running\n"
-printf "- You may need to stop Teams and re-enable permissions under Security/Permissions/Screen Recording\n"
+printf " - Keep an eye on updates, they may not work, and if they do then this may need re-running\n"
+printf " - You may need to stop Teams and re-enable permissions under Security/Permissions/Screen Recording\n"
 exit 0;
